@@ -31,6 +31,7 @@
             cursor: none; /* Hide default cursor */
         }
 
+        body.intro-active { overflow: hidden; } /* Lock scroll during intro */
         a, button { cursor: none; }
 
         /* Subtle background radial gradient for depth */
@@ -81,6 +82,36 @@
             width: 60px; height: 60px;
             border-color: var(--accent-color);
             background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        /* --- LUXURY GOLDEN LINE INTRO (Retract Version) --- */
+        #intro-screen { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background-color: #050505; z-index: 9000; 
+            display: flex; justify-content: center; align-items: center; 
+            transition: opacity 0.6s ease, visibility 0.6s ease; cursor: pointer; 
+        }
+        #intro-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .intro-line-container {
+            width: 100%; position: relative; display: flex; justify-content: center; align-items: center;
+        }
+        
+        /* The line that draws and retracts */
+        .intro-reveal-line {
+            width: 0; height: 2px; 
+            background-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+            animation: drawAndRetract 2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+
+        @keyframes drawAndRetract {
+            0% { width: 0; opacity: 0; }
+            10% { width: 0; opacity: 1; } /* Appear */
+            40% { width: 100vw; opacity: 1; } /* Draw horizontally */
+            55% { width: 100vw; opacity: 1; } /* Pause for a beat */
+            85% { width: 0; opacity: 1; } /* Retract back to center */
+            100% { width: 0; opacity: 0; } /* Final vanish */
         }
 
         /* Navigation */
@@ -245,7 +276,7 @@
         }
     </style>
 </head>
-<body>
+<body class="intro-active">
 
     <!-- Background Elements -->
     <canvas id="gold-canvas"></canvas>
@@ -254,6 +285,13 @@
     <div class="cursor-outline"></div>
     <div class="cursor-line"></div>
     <div class="cursor-dot"></div>
+
+    <!-- Luxury Line Intro Screen -->
+    <div id="intro-screen">
+        <div class="intro-line-container">
+            <div class="intro-reveal-line"></div>
+        </div>
+    </div>
 
     <nav>
         <a href="#hero" class="logo">HANSEN <span>T.</span></a>
@@ -391,6 +429,21 @@
     </section>
 
     <script>
+        // Cinematic Intro Screen Logic
+        const introScreen = document.getElementById('intro-screen');
+        introScreen.addEventListener('click', () => {
+            introScreen.classList.add('hide');
+            document.body.classList.remove('intro-active');
+        });
+
+        // Trigger the reveal right as the line finishes retracting (around 80% of 2000ms = 1600ms)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                introScreen.classList.add('hide'); // Fades the black screen out
+                document.body.classList.remove('intro-active'); // Unlocks scroll
+            }, 1600); 
+        });
+
         // Typewriter
         const titles = ["Aspiring Full-Stack Developer.", "Game Dev Enthusiast.", "AI Prompt Engineer.", "Problem Solver."];
         let titleIndex = 0; let charIndex = 0; let isDeleting = false;
