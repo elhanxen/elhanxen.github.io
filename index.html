@@ -6,7 +6,6 @@
     <title>Hansen J. Tiodianco | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Option 1 Fonts: Spectral & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Spectral:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,7 +28,10 @@
             font-family: var(--font-body);
             overflow-x: hidden;
             line-height: 1.6;
+            cursor: none; /* Hide default cursor */
         }
+
+        a, button { cursor: none; }
 
         /* Subtle background radial gradient for depth */
         body::before {
@@ -39,6 +41,47 @@
         }
 
         #gold-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+        /* --- LUXURY DOM CURSOR --- */
+        .cursor-dot {
+            width: 6px; height: 6px;
+            background-color: var(--accent-light);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px var(--accent-color);
+            transition: width 0.3s, height 0.3s, opacity 0.3s;
+        }
+        
+        .cursor-outline {
+            width: 32px; height: 32px;
+            border: 1px solid rgba(212, 175, 55, 0.6);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+        }
+
+        .cursor-line {
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            position: fixed; top: 0; left: 0;
+            transform-origin: 0 0;
+            pointer-events: none; z-index: 9998;
+            opacity: 0.7;
+        }
+
+        /* Hover state */
+        body.cursor-hover .cursor-dot {
+            width: 0; height: 0;
+        }
+        body.cursor-hover .cursor-outline {
+            width: 60px; height: 60px;
+            border-color: var(--accent-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
 
         /* Navigation */
         nav {
@@ -197,6 +240,8 @@
 
         /* Mobile */
         @media (max-width: 768px) {
+            body { cursor: auto; } /* Restore cursor on mobile */
+            .cursor-dot, .cursor-outline, .cursor-line { display: none; }
             nav, #hero, section { padding: 2rem; }
             nav ul { gap: 1rem; }
             #hero { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 3rem; }
@@ -211,7 +256,13 @@
 </head>
 <body>
 
+    <!-- Background Elements -->
     <canvas id="gold-canvas"></canvas>
+    
+    <!-- DOM Luxury Cursor -->
+    <div class="cursor-outline"></div>
+    <div class="cursor-line"></div>
+    <div class="cursor-dot"></div>
 
     <nav>
         <a href="#hero" class="logo">HANSEN <span>T.</span></a>
@@ -318,18 +369,18 @@
                 </div>
             </div>
             <div class="project-card reveal">
-                <img src="project3.jpg" alt="Project 3" class="project-img">
-                <div class="project-info">
-                    <h4>Project Three Title</h4>
-                    <p>Brief description of what this project does. E.g., An AI-integrated application using the Gemini API to automate tasks and generate content.</p>
-                    <div class="tag-container">
-                        <span class="tag">JavaScript</span><span class="tag">Gemini API</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/elhanxen" target="_blank">View Repository →</a>
-                    </div>
-                </div>
-            </div>
+    <img src="weather-app-preview.png" alt="AI Weather App" class="project-img">
+    <div class="project-info">
+        <h4>AI-Powered Weather App</h4>
+        <p>A .NET MAUI weather app that goes beyond raw forecasts — integrates the Gemini API to generate a natural-language daily summary and practical tip based on live conditions.</p>
+        <div class="tag-container">
+            <span class="tag">C#</span><span class="tag">.NET MAUI</span><span class="tag">Gemini API</span><span class="tag">SQLite</span>
+        </div>
+        <div class="project-links">
+            <a href="https://github.com/elhanxen/WeatherApp" target="_blank">View Repository →</a>
+        </div>
+    </div>
+</div>
         </div>
     </section>
 
@@ -428,18 +479,18 @@
         });
 
         // Floating Gold Dust Particles
-        const canvas = document.getElementById('gold-canvas'); 
-        const ctx = canvas.getContext('2d'); 
+        const goldCanvas = document.getElementById('gold-canvas'); 
+        const goldCtx = goldCanvas.getContext('2d'); 
         let particles = [];
         
-        function setCanvasSize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        setCanvasSize(); 
-        window.addEventListener('resize', setCanvasSize);
+        function setGoldCanvasSize() { goldCanvas.width = window.innerWidth; goldCanvas.height = window.innerHeight; }
+        setGoldCanvasSize(); 
+        window.addEventListener('resize', setGoldCanvasSize);
 
         class GoldDust {
-            constructor() { this.reset(); this.y = Math.random() * canvas.height; }
+            constructor() { this.reset(); this.y = Math.random() * goldCanvas.height; }
             reset() {
-                this.x = Math.random() * canvas.width;
+                this.x = Math.random() * goldCanvas.width;
                 this.y = -10;
                 this.size = Math.random() * 1.5 + 0.5;
                 this.speedY = Math.random() * 0.5 + 0.2; 
@@ -450,28 +501,77 @@
             update() { 
                 this.y += this.speedY; 
                 this.x += this.speedX + Math.sin(this.y / 50) * 0.2; 
-                if (this.y > canvas.height) this.reset(); 
+                if (this.y > goldCanvas.height) this.reset(); 
             }
             draw() { 
-                ctx.save(); 
-                ctx.translate(this.x, this.y); 
-                ctx.shadowColor = '#d4af37'; 
-                ctx.shadowBlur = this.glow; 
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; 
-                ctx.beginPath(); 
-                ctx.arc(0, 0, this.size, 0, Math.PI * 2); 
-                ctx.fill(); 
-                ctx.restore(); 
+                goldCtx.save(); 
+                goldCtx.translate(this.x, this.y); 
+                goldCtx.shadowColor = '#d4af37'; 
+                goldCtx.shadowBlur = this.glow; 
+                goldCtx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; 
+                goldCtx.beginPath(); 
+                goldCtx.arc(0, 0, this.size, 0, Math.PI * 2); 
+                goldCtx.fill(); 
+                goldCtx.restore(); 
             }
         }
         function initParticles() { particles = []; for(let i = 0; i < 40; i++) particles.push(new GoldDust()); }
         function animateParticles() { 
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            goldCtx.clearRect(0, 0, goldCanvas.width, goldCanvas.height); 
             particles.forEach(p => { p.update(); p.draw(); }); 
             requestAnimationFrame(animateParticles); 
         }
         initParticles(); 
         animateParticles();
+
+        // SLICK LUXURY DOM CURSOR
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const cursorLine = document.querySelector('.cursor-line');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let outlineX = 0;
+        let outlineY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Position dot exactly on mouse
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateCursor() {
+            // Lag effect for outline
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            
+            cursorOutline.style.left = outlineX + 'px';
+            cursorOutline.style.top = outlineY + 'px';
+            
+            // Calculate distance between outline and dot
+            const distance = Math.hypot(mouseX - outlineX, mouseY - outlineY);
+            // Calculate angle
+            const angle = Math.atan2(mouseY - outlineY, mouseX - outlineX) * 180 / Math.PI;
+            
+            // Draw line
+            cursorLine.style.width = distance + 'px';
+            cursorLine.style.left = outlineX + 'px';
+            cursorLine.style.top = outlineY + 'px';
+            cursorLine.style.transform = `rotate(${angle}deg)`;
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover detection for links and buttons
+        const interactiveElements = document.querySelectorAll('a, button');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
     </script>
 </body>
 </html>
