@@ -20,6 +20,17 @@
             --font-body: 'Inter', sans-serif;
         }
 
+        /* --- REFINED HIGH-CONTRAST LIGHT MODE --- */
+        body.light-mode {
+            --bg-color: #F5F5F7; /* Clean Apple-like Light Gray */
+            --secondary-bg: #ffffff; /* Pure White */
+            --text-color: #1D1D1F; /* Deep Black for text */
+            --muted-color: #6E6E73; /* Dark Slate for muted text */
+            --accent-color: #B8860B; /* Dark Goldenrod for max readability */
+            --accent-light: #D4AF37;
+            --accent-glow: rgba(184, 134, 11, 0.2);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
@@ -29,6 +40,7 @@
             overflow-x: hidden;
             line-height: 1.6;
             cursor: none; /* Hide default cursor */
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         body.intro-active { overflow: hidden; } /* Lock scroll during intro */
@@ -39,6 +51,10 @@
             content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, transparent 60%);
             z-index: -1; pointer-events: none;
+            transition: background 0.4s ease;
+        }
+        body.light-mode::before {
+            background: radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 60%);
         }
 
         #gold-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
@@ -57,7 +73,7 @@
         
         .cursor-outline {
             width: 32px; height: 32px;
-            border: 1px solid rgba(212, 175, 55, 0.6);
+            border: 1px solid var(--accent-color);
             border-radius: 50%;
             position: fixed; top: 0; left: 0;
             pointer-events: none; z-index: 9999;
@@ -75,21 +91,19 @@
         }
 
         /* Hover state */
-        body.cursor-hover .cursor-dot {
-            width: 0; height: 0;
-        }
+        body.cursor-hover .cursor-dot { width: 0; height: 0; }
         body.cursor-hover .cursor-outline {
             width: 60px; height: 60px;
             border-color: var(--accent-color);
-            background-color: rgba(212, 175, 55, 0.1);
+            background-color: var(--accent-glow);
         }
 
         /* --- LUXURY GOLDEN LINE INTRO (Retract Version) --- */
         #intro-screen { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background-color: #050505; z-index: 9000; 
+            background-color: var(--bg-color); z-index: 9000; 
             display: flex; justify-content: center; align-items: center; 
-            transition: opacity 0.6s ease, visibility 0.6s ease; cursor: pointer; 
+            transition: opacity 0.6s ease, visibility 0.6s ease, background-color 0.4s ease; cursor: pointer; 
         }
         #intro-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
         
@@ -97,7 +111,6 @@
             width: 100%; position: relative; display: flex; justify-content: center; align-items: center;
         }
         
-        /* The line that draws and retracts */
         .intro-reveal-line {
             width: 0; height: 2px; 
             background-color: var(--accent-color);
@@ -107,11 +120,11 @@
 
         @keyframes drawAndRetract {
             0% { width: 0; opacity: 0; }
-            10% { width: 0; opacity: 1; } /* Appear */
-            40% { width: 100vw; opacity: 1; } /* Draw horizontally */
-            55% { width: 100vw; opacity: 1; } /* Pause for a beat */
-            85% { width: 0; opacity: 1; } /* Retract back to center */
-            100% { width: 0; opacity: 0; } /* Final vanish */
+            10% { width: 0; opacity: 1; } 
+            40% { width: 100vw; opacity: 1; } 
+            55% { width: 100vw; opacity: 1; } 
+            85% { width: 0; opacity: 1; } 
+            100% { width: 0; opacity: 0; } 
         }
 
         /* Navigation */
@@ -120,16 +133,40 @@
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(15px); z-index: 1000;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+        body.light-mode nav {
+            background: rgba(245, 245, 247, 0.8);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
         .logo { font-family: var(--font-heading); font-size: 1.4rem; color: var(--text-color); text-decoration: none; letter-spacing: 0.5px; font-weight: 400; }
         .logo span { color: var(--accent-color); }
 
+        .nav-controls { display: flex; align-items: center; gap: 2.5rem; }
         nav ul { display: flex; list-style: none; gap: 3rem; }
         nav ul a { text-decoration: none; color: var(--muted-color); font-size: 0.75rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease; position: relative; }
         nav ul a:hover { color: var(--accent-color); }
         nav ul a::after { content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px; background: var(--accent-color); transition: all 0.3s ease; transform: translateX(-50%); }
         nav ul a:hover::after { width: 100%; }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent-color);
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+        #theme-toggle:hover {
+            background: var(--accent-glow);
+            transform: rotate(15deg);
+        }
+        .sun-icon { display: none; }
+        body.light-mode .sun-icon { display: block; }
+        body.light-mode .moon-icon { display: none; }
 
         /* Hero Section */
         #hero {
@@ -159,7 +196,7 @@
             position: relative; overflow: hidden; transition: all 0.3s ease; border: 1px solid var(--accent-color); color: var(--text-color);
             background: transparent;
         }
-        .btn.primary { background: var(--accent-color); color: #000; border-color: var(--accent-color); }
+        .btn.primary { background: var(--accent-color); color: var(--bg-color); border-color: var(--accent-color); }
         .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.1); transition: left 0.4s ease; }
         .btn:hover::before { left: 0; }
         .btn.primary:hover { box-shadow: 0 0 25px var(--accent-glow); background: var(--accent-light); }
@@ -183,6 +220,7 @@
         .hero-image {
             width: 340px; height: 340px; border-radius: 50%; object-fit: cover; object-position: top; border: 4px solid var(--bg-color);
             z-index: 2;
+            transition: border-color 0.4s ease;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -209,21 +247,26 @@
 
         .card {
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); padding: 2.5rem 2rem; border: 1px solid rgba(212, 175, 55, 0.15); 
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.4s ease;
             opacity: 0; transform: translateY(30px); position: relative;
             transform-style: preserve-3d; will-change: transform;
         }
+        body.light-mode .card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Base shadow for depth */
+        }
         .card.visible { opacity: 1; transform: translateY(0); }
         
-        /* Gold glow tracking mouse */
         .card::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(212, 175, 55, 0.15), transparent 40%);
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--accent-glow), transparent 40%);
             opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
         }
         .card:hover::after { opacity: 1; }
 
         .card:hover { border-color: var(--accent-color); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        body.light-mode .card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.15); } /* Softer hover shadow for light mode */
         
         .card h4 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-color); transform: translateZ(20px); letter-spacing: 0.3px; font-weight: 400; }
         
@@ -233,30 +276,41 @@
             background: rgba(0,0,0,0.5); padding: 0.4rem 0.8rem; font-size: 0.7rem; color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.2); 
             font-family: var(--font-body); letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; font-weight: 500;
         }
+        body.light-mode .tag {
+            background: #F5F5F7;
+            color: var(--accent-color);
+            border: 1px solid rgba(184, 134, 11, 0.3); /* Deeper border for tags */
+        }
         .card:hover .tag {
             border-color: var(--accent-color);
             color: var(--text-color);
-            background: rgba(212, 175, 55, 0.1);
+            background: var(--accent-glow);
             transform: translateY(-3px);
         }
 
         /* Projects */
         .project-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.1); overflow: hidden; transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease; opacity: 0; transform: translateY(30px); position: relative; transform-style: preserve-3d; will-change: transform;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(212, 175, 55, 0.1); overflow: hidden; transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.4s ease; opacity: 0; transform: translateY(30px); position: relative; transform-style: preserve-3d; will-change: transform;
+        }
+        body.light-mode .project-card {
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .project-card.visible { opacity: 1; transform: translateY(0); }
         
-        /* Gold glow tracking mouse for projects */
         .project-card::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(212, 175, 55, 0.15), transparent 40%);
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--accent-glow), transparent 40%);
             opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 2;
         }
         .project-card:hover::after { opacity: 1; }
 
         .project-card:hover { border-color: var(--accent-color); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        body.light-mode .project-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         
         .project-img { width: 100%; height: 220px; object-fit: cover; filter: grayscale(80%) brightness(0.7); transition: filter 0.4s ease; transform: translateZ(20px); }
+        body.light-mode .project-img { filter: grayscale(20%) brightness(0.95); }
         .project-card:hover .project-img { filter: grayscale(0%) brightness(1); }
         
         .project-info { padding: 2rem; position: relative; z-index: 3; transform: translateZ(15px); }
@@ -266,7 +320,8 @@
         .project-links a { color: var(--accent-color); text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 0.3rem; }
 
         /* Contact */
-        #contact { text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); background: var(--secondary-bg); }
+        #contact { text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); background: var(--secondary-bg); transition: background 0.4s ease; }
+        body.light-mode #contact { border-top: 1px solid rgba(0,0,0,0.1); }
         .contact-info { margin-top: 3rem; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
         .contact-item { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--muted-color); transition: color 0.3s; font-size: 0.9rem; letter-spacing: 1px; }
         .contact-item:hover { color: var(--accent-color); }
@@ -276,6 +331,7 @@
             body { cursor: auto; } /* Restore cursor on mobile */
             .cursor-dot, .cursor-outline, .cursor-line { display: none; }
             nav, #hero, section { padding: 2rem; }
+            .nav-controls { gap: 1rem; }
             nav ul { gap: 1rem; }
             #hero { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 3rem; }
             .hero-content { max-width: 100%; }
@@ -306,12 +362,19 @@
 
     <nav>
         <a href="#hero" class="logo">HANSEN <span>T.</span></a>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="nav-controls">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" aria-label="Toggle dark and light mode">
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+        </div>
     </nav>
 
     <section id="hero">
@@ -440,22 +503,48 @@
     </section>
 
     <script>
-        // Cinematic Intro Screen Logic
+        // --- THEME TOGGLE LOGIC ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Apply saved theme on load (Wrapped in try-catch for local file testing)
+        try {
+            if (localStorage.getItem('theme') === 'light') {
+                body.classList.add('light-mode');
+            }
+        } catch (e) {
+            console.warn("Local storage is not available in this environment.");
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            try {
+                if (body.classList.contains('light-mode')) {
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+            } catch (e) {
+                console.warn("Local storage is not available in this environment.");
+            }
+        });
+
+        // --- INTRO SCREEN LOGIC ---
         const introScreen = document.getElementById('intro-screen');
         introScreen.addEventListener('click', () => {
             introScreen.classList.add('hide');
-            document.body.classList.remove('intro-active');
+            body.classList.remove('intro-active');
         });
 
-        // Trigger the reveal right as the line finishes retracting (around 80% of 2000ms = 1600ms)
+        // Trigger the reveal right as the line finishes retracting
         window.addEventListener('load', () => {
             setTimeout(() => {
-                introScreen.classList.add('hide'); // Fades the black screen out
-                document.body.classList.remove('intro-active'); // Unlocks scroll
+                introScreen.classList.add('hide');
+                body.classList.remove('intro-active');
             }, 1600); 
         });
 
-        // Typewriter
+        // --- TYPEWRITER EFFECT ---
         const titles = ["Aspiring Full-Stack Developer.", "Game Dev Enthusiast.", "AI Prompt Engineer.", "Problem Solver."];
         let titleIndex = 0; let charIndex = 0; let isDeleting = false;
         const typeWriterElement = document.getElementById('typewriter');
@@ -470,7 +559,7 @@
         }
         setTimeout(typeWriter, 1000);
 
-        // Scroll Reveal
+        // --- SCROLL REVEAL ---
         const revealElements = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { 
@@ -482,7 +571,7 @@
         }, { threshold: 0.1 });
         revealElements.forEach(el => observer.observe(el));
 
-        // 3D Tilt & Mouse Tracking Gold Glow (Now applies to both Skills and Projects)
+        // --- 3D TILT & MOUSE TRACKING ---
         const cards = document.querySelectorAll('#skills .card, #projects .project-card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -495,7 +584,7 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = ((y - centerY) / centerY) * -5; // Softer tilt for luxury feel
+                const rotateX = ((y - centerY) / centerY) * -5; 
                 const rotateY = ((x - centerX) / centerX) * 5;
                 
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
@@ -509,7 +598,7 @@
             });
         });
 
-        // Floating Gold Dust Particles
+        // --- FLOATING GOLD DUST PARTICLES ---
         const goldCanvas = document.getElementById('gold-canvas'); 
         const goldCtx = goldCanvas.getContext('2d'); 
         let particles = [];
@@ -555,7 +644,7 @@
         initParticles(); 
         animateParticles();
 
-        // SLICK LUXURY DOM CURSOR
+        // --- SLICK LUXURY DOM CURSOR ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         const cursorLine = document.querySelector('.cursor-line');
@@ -569,25 +658,20 @@
             mouseX = e.clientX;
             mouseY = e.clientY;
             
-            // Position dot exactly on mouse
             cursorDot.style.left = mouseX + 'px';
             cursorDot.style.top = mouseY + 'px';
         });
 
         function animateCursor() {
-            // Lag effect for outline
             outlineX += (mouseX - outlineX) * 0.15;
             outlineY += (mouseY - outlineY) * 0.15;
             
             cursorOutline.style.left = outlineX + 'px';
             cursorOutline.style.top = outlineY + 'px';
             
-            // Calculate distance between outline and dot
             const distance = Math.hypot(mouseX - outlineX, mouseY - outlineY);
-            // Calculate angle
             const angle = Math.atan2(mouseY - outlineY, mouseX - outlineX) * 180 / Math.PI;
             
-            // Draw line
             cursorLine.style.width = distance + 'px';
             cursorLine.style.left = outlineX + 'px';
             cursorLine.style.top = outlineY + 'px';
@@ -597,7 +681,7 @@
         }
         animateCursor();
 
-        // Hover detection for links and buttons
+        // Hover detection for links and buttons (includes theme toggle automatically)
         const interactiveElements = document.querySelectorAll('a, button');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
