@@ -223,15 +223,6 @@
         .project-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
         .project-links a { color: var(--accent-color); text-decoration: none; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 0.3rem; }
 
-        /* Timeline */
-        .timeline { position: relative; border-left: 1px solid rgba(212, 175, 55, 0.2); padding-left: 3rem; max-width: 800px; margin: 0 auto; }
-        .timeline-item { margin-bottom: 3rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -3.4rem; top: 5px; width: 12px; height: 12px; background: var(--bg-color); border: 1px solid var(--accent-color); border-radius: 50%; transition: all 0.3s ease; }
-        .timeline-item:hover::before { background: var(--accent-color); box-shadow: 0 0 15px var(--accent-color); }
-        .timeline-item .date { font-family: var(--font-body); color: var(--accent-color); font-size: 0.75rem; margin-bottom: 0.5rem; display: block; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
-        .timeline-item h4 { font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.3rem; letter-spacing: 0.5px; font-weight: 700; }
-        .timeline-item p { color: var(--muted-color); font-weight: 300; }
-
         /* Contact */
         #contact { text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); background: var(--secondary-bg); }
         .contact-info { margin-top: 3rem; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
@@ -270,7 +261,6 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#education">Education</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -343,83 +333,45 @@
         <div class="divider"></div>
         <div class="grid-container">
             <div class="project-card reveal">
-    <img src="ai-study-assistant-preview.png" alt="AI Study Assistant" class="project-img">
-    <div class="project-info">
-        <h4>AI Study Assistant</h4>
-        <p>A full-stack web app that turns pasted notes or PDFs into an instant summary and quiz using the Gemini API — with a Supabase-backed history of past study sessions and a secure serverless backend to protect the API key.</p>
-        <div class="tag-container">
-            <span class="tag">JavaScript</span><span class="tag">Gemini API</span><span class="tag">Supabase</span><span class="tag">Vercel</span>
-        </div>
-        <div class="project-links">
-            <a href="https://ai-study-assistant-black-tau.vercel.app/" target="_blank">Visit Live Site →</a>
-            <a href="https://github.com/elhanxen/ai-study-assistant" target="_blank">View Repository →</a>
-        </div>
-    </div>
-</div>
-<!-- <div class="project-card reveal">
-                <img src="project1.jpg" alt="Project 2" class="project-img">
+                <img src="ai-study-assistant-preview.png" alt="AI Study Assistant" class="project-img">
                 <div class="project-info">
-                    <h4>Project One Title</h4>
-                    <p>Brief description of what this project does. Mention the main features and what problem it solves. E.g., A full-stack web app built with PHP and Supabase.</p>
+                    <h4>AI Study Assistant</h4>
+                    <p>A full-stack web app that turns pasted notes or PDFs into an instant summary and quiz using the Gemini API — with a Supabase-backed history of past study sessions and a secure serverless backend to protect the API key.</p>
                     <div class="tag-container">
-                        <span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">Supabase</span>
+                        <span class="tag">JavaScript</span><span class="tag">Gemini API</span><span class="tag">Supabase</span><span class="tag">Vercel</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/elhanxen" target="_blank">View Repository →</a>
+                        <a href="https://ai-study-assistant-black-tau.vercel.app/" target="_blank">Visit Live Site →</a>
+                        <a href="https://github.com/elhanxen/ai-study-assistant" target="_blank">View Repository →</a>
                     </div>
                 </div>
-            </div> -->
-            <div class="project-card reveal">
-    <img src="nealschicken-preview.png" alt="Neal's Chicken" class="project-img">
-    <div class="project-info">
-        <h4>Neal's Chicken</h4>
-        <p>A sleek restaurant web application featuring dynamic menus, promotional banners, and an intuitive cart system.</p>
-        <div class="tag-container">
-            <span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">CSS</span><span class="tag">Vercel</span>
-        </div>
-        <div class="project-links">
-            <a href="https://neals-chicken.vercel.app/" target="_blank">Visit Live Site →</a>
-           <a href="https://github.com/npeteros/neals-chicken" target="_blank">View Repository →</a>
-        </div>
-    </div>
-</div>
-            <div class="project-card reveal">
-    <img src="weather-app-preview.png" alt="AI Weather App" class="project-img">
-    <div class="project-info">
-        <h4>AI-Powered Weather App</h4>
-        <p>A .NET MAUI weather app that goes beyond raw forecasts — integrates the Gemini API to generate a natural-language daily summary and practical tip based on live conditions.</p>
-        <div class="tag-container">
-            <span class="tag">C#</span><span class="tag">.NET MAUI</span><span class="tag">Gemini API</span><span class="tag">SQLite</span>
-        </div>
-        <div class="project-links">
-            <a href="https://github.com/elhanxen/WeatherApp" target="_blank">View Repository →</a>
-        </div>
-    </div>
-</div>
-        </div>
-    </section>
-
-    <section id="education">
-        <div class="section-title">
-            <h3>Education <span>& Path</span></h3>
-            <div class="section-subtitle">Academic Background</div>
-        </div>
-        <div class="divider"></div>
-        <div class="timeline">
-            <div class="timeline-item reveal">
-                <span class="date">2024 - Present</span>
-                <h4>Bachelor of Science in Information Technology</h4>
-                <p>University of San Carlos - Talamban Campus</p>
             </div>
-            <div class="timeline-item reveal">
-                <span class="date">2021 - 2023</span>
-                <h4>Senior Highschool: TVL - ICT</h4>
-                <p>University of Cebu - Banilad Campus</p>
+            <div class="project-card reveal">
+                <img src="nealschicken-preview.png" alt="Neal's Chicken" class="project-img">
+                <div class="project-info">
+                    <h4>Neal's Chicken</h4>
+                    <p>A sleek restaurant web application featuring dynamic menus, promotional banners, and an intuitive cart system.</p>
+                    <div class="tag-container">
+                        <span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">CSS</span><span class="tag">Vercel</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://neals-chicken.vercel.app/" target="_blank">Visit Live Site →</a>
+                       <a href="https://github.com/npeteros/neals-chicken" target="_blank">View Repository →</a>
+                    </div>
+                </div>
             </div>
-            <div class="timeline-item reveal">
-                <span class="date">2025</span>
-                <h4>Certifications</h4>
-                <p>Cisco Certified Network Associate (CCNA) | Datacamp Docker & Kubernetes | Accenture Skills to Succeed Academy</p>
+            <div class="project-card reveal">
+                <img src="weather-app-preview.png" alt="AI Weather App" class="project-img">
+                <div class="project-info">
+                    <h4>AI-Powered Weather App</h4>
+                    <p>A .NET MAUI weather app that goes beyond raw forecasts — integrates the Gemini API to generate a natural-language daily summary and practical tip based on live conditions.</p>
+                    <div class="tag-container">
+                        <span class="tag">C#</span><span class="tag">.NET MAUI</span><span class="tag">Gemini API</span><span class="tag">SQLite</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/elhanxen/WeatherApp" target="_blank">View Repository →</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
