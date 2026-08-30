@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Theme Version 3.0 - Crimson Light Mode -->
+    <!-- Theme Version 3.1 - Mobile Header Fixed -->
     <title>Hansen J. Tiodianco | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -339,9 +339,10 @@
         @media (max-width: 768px) {
             body { cursor: auto; } /* Restore cursor on mobile */
             .cursor-dot, .cursor-outline, .cursor-line { display: none; }
-            nav, #hero, section { padding: 2rem; }
+            nav { padding: 1rem 1.5rem; }
+            nav ul { display: none; } /* Hides the links to prevent squished header */
             .nav-controls { gap: 1rem; }
-            nav ul { gap: 1rem; }
+            #hero, section { padding: 6rem 1.5rem 4rem; } /* Adjusted top padding for smaller header */
             #hero { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 3rem; }
             .hero-content { max-width: 100%; }
             .cta-btns { justify-content: center; }
@@ -349,6 +350,7 @@
             .hero-image-container { width: 250px; height: 250px; }
             .hero-image { width: 220px; height: 220px; }
             .section-title h3 { font-size: 1.6rem; }
+            .contact-info { gap: 1.5rem; } /* Tighter gap for mobile contacts */
         }
     </style>
 </head>
