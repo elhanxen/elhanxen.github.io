@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- ... rest of your styles ... -->
     <style>
         :root {
             --bg-color: #050505;
@@ -337,8 +336,19 @@
         #contact { text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); background: var(--secondary-bg); transition: background 0.4s ease, border-color 0.4s ease; }
         body.light-mode #contact { border-top: 1px solid rgba(0,0,0,0.1); }
         .contact-info { margin-top: 3rem; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
-        .contact-item { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--muted-color); transition: color 0.3s; font-size: 0.9rem; letter-spacing: 1px; }
+        
+        /* Updated Contact Items with Underline Animation */
+        .contact-item { 
+            display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--muted-color); transition: color 0.3s; font-size: 0.9rem; letter-spacing: 1px; 
+            position: relative; /* Required for the underline */
+        }
         .contact-item:hover { color: var(--accent-color); }
+        
+        /* The expanding line under contact items */
+        .contact-item::after { 
+            content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px; background: var(--accent-color); transition: all 0.3s ease; transform: translateX(-50%); 
+        }
+        .contact-item:hover::after { width: 100%; }
 
         /* Mobile */
         @media (max-width: 768px) {
@@ -502,18 +512,18 @@
                 </div>
             </div>
             <div class="project-card reveal">
-    <img src="CKLC-Inventory.png" alt="Inventory & POS System" class="project-img">
-    <div class="project-info">
-        <h4>CKLC Inventory & POS System</h4>
-        <p>A Java Swing desktop application with a MySQL backend for managing product inventory which supports adding, updating, searching, and low-stock alerts, with a full database-driven POS transaction flow.</p>
-        <div class="tag-container">
-            <span class="tag">Java</span><span class="tag">Swing</span><span class="tag">MySQL</span><span class="tag">JDBC</span>
-        </div>
-        <div class="project-links">
-            <a href="https://github.com/elhanxen/Inventory-System-CKLC" target="_blank">View Repository</a>
-        </div>
-    </div>
-</div>
+                <img src="CKLC-Inventory.png" alt="Inventory & POS System" class="project-img">
+                <div class="project-info">
+                    <h4>CKLC Inventory & POS System</h4>
+                    <p>A Java Swing desktop application with a MySQL backend for managing product inventory which supports adding, updating, searching, and low-stock alerts, with a full database-driven POS transaction flow.</p>
+                    <div class="tag-container">
+                        <span class="tag">Java</span><span class="tag">Swing</span><span class="tag">MySQL</span><span class="tag">JDBC</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/elhanxen/Inventory-System-CKLC" target="_blank">View Repository</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -525,9 +535,10 @@
         <div class="divider"></div>
         <p style="color: var(--muted-color); font-size: 1rem; max-width: 500px; margin: 0 auto 3rem; font-weight: 300;">Currently open to internship and junior developer opportunities.</p>
         <div class="contact-info">
-            <a href="mailto:tiodiancohansen@gmail.com" class="contact-item">✉️ tiodiancohansen@gmail.com</a>
-            <a href="tel:09457623919" class="contact-item">📱 0945 762 3919</a>
-            <a href="https://github.com/elhanxen" target="_blank" class="contact-item">🔗 github.com/elhanxen</a>
+            <a href="mailto:tiodiancohansen@gmail.com" class="contact-item">tiodiancohansen@gmail.com</a>
+            <a href="tel:09457623919" class="contact-item">0945 762 3919</a>
+            <a href="https://github.com/elhanxen" target="_blank" class="contact-item">github.com/elhanxen</a>
+            <a href="https://www.linkedin.com/in/hansen-tiodianco-8667413a7" target="_blank" class="contact-item">LinkedIn</a>
         </div>
     </section>
 
