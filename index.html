@@ -434,7 +434,7 @@
         </div>
         <div class="divider"></div>
         <p class="about-text">
-            An IT student aspiring to be a Full-Stack Developer with a strong interest in both software development  and web development. Seeking opportunities to apply my programming, problem-solving, and creative skills to build engaging software and responsive web applications. Committed to continuously learning new technologies, collaborating with teams, while looking to gain professional experience designing intuitive interfaces and developing robust, full-stack applications.
+            An IT student aspiring to be a Full-Stack Developer with a strong interest in both software development  and web development. Seeking opportunities to apply my programming, problem-solving, and creative skills to build engaging software and responsive web applications. Committed to continuously learning new technologies all while looking to gain professional experience designing intuitive interfaces and developing robust, full-stack applications.
         </p>
     </section>
 
@@ -542,11 +542,11 @@
             <div class="section-subtitle">Let's Connect</div>
         </div>
         <div class="divider"></div>
-        <!-- Added color: var(--muted-color); to the inline style below -->
+       
         <p class="about-text" style="max-width: 600px; margin: 0 auto 4rem; color: var(--muted-color);">Currently open to internship and junior developer opportunities. Feel free to reach out via the form or my direct links below.</p>
         
         <div class="contact-grid">
-            <!-- Left Card: Direct Contact Info -->
+          
             <div class="card reveal contact-info-card">
                 <h4>Contact Details</h4>
                 <div class="contact-info">
@@ -777,21 +777,20 @@
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
 
-        // --- CONTACT FORM LOGIC ---
+       
         const contactForm = document.getElementById('contact-form');
         const successToast = document.getElementById('success-toast');
 
         contactForm.addEventListener('submit', (e) => {
-            // Prevent the form from refreshing the page or trying to send an email
+          
             e.preventDefault(); 
             
-            // Show the luxury toast alert
+        
             successToast.classList.add('show');
             
-            // Clear the form fields
             contactForm.reset();
             
-            // Hide the toast alert after 3 seconds
+     
             setTimeout(() => {
                 successToast.classList.remove('show');
             }, 3000);
