@@ -49,7 +49,7 @@
         }
 
         body.intro-active { overflow: hidden; } 
-        a, button { cursor: none; }
+        a, button, input, textarea { cursor: none; }
 
         
         body::before {
@@ -185,7 +185,7 @@
             font-family: var(--font-heading); font-size: 4.4rem; line-height: 1.2; margin-bottom: 1.5rem; color: var(--text-color); letter-spacing: 0.3px; font-weight: 400;
         }
         #hero h1 span { 
-            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); /* Gold Gradient */
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); 
             -webkit-background-clip: text; background-clip: text;
             -webkit-text-fill-color: transparent; color: var(--accent-color);
             transition: background 0.4s ease;
@@ -283,7 +283,7 @@
         
         .card h4 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-color); transform: translateZ(20px); letter-spacing: 0.3px; font-weight: 400; }
         
-        .tag-container { display: flex; flex-wrap: wrap; gap: 0.5rem; transform: translateZ(15px); }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         
         .tag {
             background: rgba(0,0,0,0.5); padding: 0.4rem 0.8rem; font-size: 0.7rem; color: var(--accent-light); border: 1px solid rgba(212, 175, 55, 0.2); 
@@ -292,7 +292,7 @@
         body.light-mode .tag {
             background: #F5F5F7;
             color: var(--accent-color);
-            border: 1px solid rgba(198, 40, 40, 0.3); /* Red border for tags */
+            border: 1px solid rgba(198, 40, 40, 0.3); 
         }
         .card:hover .tag {
             border-color: var(--accent-color);
@@ -335,22 +335,30 @@
         
         #contact { text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); background: var(--secondary-bg); transition: background 0.4s ease, border-color 0.4s ease; }
         body.light-mode #contact { border-top: 1px solid rgba(0,0,0,0.1); }
-        .contact-info { margin-top: 3rem; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
         
-        
-        .contact-item { 
-            display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--muted-color); transition: color 0.3s; font-size: 0.9rem; letter-spacing: 1px; 
-            position: relative; 
-        }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; max-width: 1000px; margin: 0 auto; align-items: stretch; }
+        .contact-info-card { text-align: left; display: flex; flex-direction: column; justify-content: center; }
+        .contact-info { margin-top: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+        .contact-item { display: block; width: fit-content; text-decoration: none; color: var(--muted-color); transition: color 0.3s; font-size: 0.9rem; letter-spacing: 1px; position: relative; padding-bottom: 5px; }
         .contact-item:hover { color: var(--accent-color); }
-        
-        
-        .contact-item::after { 
-            content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px; background: var(--accent-color); transition: all 0.3s ease; transform: translateX(-50%); 
-        }
+        .contact-item::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--accent-color); transition: all 0.3s ease; }
         .contact-item:hover::after { width: 100%; }
-        
-        
+
+        .contact-form-card { text-align: left; }
+        .contact-form { width: 100%; }
+        .form-group { position: relative; margin-bottom: 2.5rem; text-align: left; }
+        .form-input { width: 100%; padding: 0.8rem 0.2rem; background: transparent; border: none; border-bottom: 1px solid var(--muted-color); color: var(--text-color); font-family: var(--font-body); font-size: 1rem; outline: none; transition: border-color 0.3s ease; }
+        .form-input:focus { border-bottom: 1px solid var(--accent-color); }
+        .form-label { position: absolute; top: 0.8rem; left: 0.2rem; color: var(--muted-color); pointer-events: none; transition: all 0.3s ease; font-size: 1rem; }
+        .form-input:focus ~ .form-label, .form-input:not(:placeholder-shown) ~ .form-label { top: -0.8rem; font-size: 0.75rem; color: var(--accent-color); letter-spacing: 1px; text-transform: uppercase; }
+        .form-input::placeholder { color: transparent; }
+        textarea.form-input { resize: vertical; min-height: 80px; }
+        .form-submit { width: 100%; padding: 1rem; background: var(--accent-color); color: var(--bg-color); border: none; border-radius: 6px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; cursor: none; transition: background 0.3s ease, box-shadow 0.3s ease; }
+        .form-submit:hover { background: var(--accent-light); box-shadow: 0 0 25px var(--accent-glow); }
+
+        .success-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent-color); color: var(--bg-color); padding: 1rem 2rem; border-radius: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.3); pointer-events: none; }
+        .success-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
         @media (max-width: 768px) {
             body { cursor: auto; } 
             .cursor-dot, .cursor-outline, .cursor-line { display: none; }
@@ -366,6 +374,7 @@
             .hero-image { width: 220px; height: 220px; }
             .section-title h3 { font-size: 1.6rem; }
             .contact-info { gap: 1.5rem; } 
+            .contact-grid { grid-template-columns: 1fr; } 
         }
     </style>
 </head>
@@ -533,14 +542,43 @@
             <div class="section-subtitle">Let's Connect</div>
         </div>
         <div class="divider"></div>
-        <p style="color: var(--muted-color); font-size: 1rem; max-width: 500px; margin: 0 auto 3rem; font-weight: 300;">Currently open to internship and junior developer opportunities.</p>
-        <div class="contact-info">
-            <a href="mailto:tiodiancohansen@gmail.com" class="contact-item">tiodiancohansen@gmail.com</a>
-            <a href="tel:09457623919" class="contact-item">0945 762 3919</a>
-            <a href="https://github.com/elhanxen" target="_blank" class="contact-item">github.com/elhanxen</a>
-            <a href="https://www.linkedin.com/in/hansen-tiodianco-8667413a7" target="_blank" class="contact-item">LinkedIn</a>
+        <p class="about-text" style="max-width: 600px; margin: 0 auto 4rem;">Currently open to internship and junior developer opportunities. Feel free to reach out via the form or my direct links below.</p>
+        
+        <div class="contact-grid">
+            <!-- Left Card: Direct Contact Info -->
+            <div class="card reveal contact-info-card">
+                <h4>Contact Details</h4>
+                <div class="contact-info">
+                    <a href="mailto:tiodiancohansen@gmail.com" class="contact-item">tiodiancohansen@gmail.com</a>
+                    <a href="tel:09457623919" class="contact-item">0945 762 3919</a>
+                    <a href="https://github.com/elhanxen" target="_blank" class="contact-item">github.com/elhanxen</a>
+                    <a href="https://www.linkedin.com/in/hansen-tiodianco-8667413a7" target="_blank" class="contact-item">LinkedIn</a>
+                </div>
+            </div>
+
+            <!-- Right Card: Contact Form -->
+            <div class="card reveal contact-form-card">
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" class="form-input" placeholder=" " required>
+                        <label for="name" class="form-label">Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" class="form-input" placeholder=" " required>
+                        <label for="email" class="form-label">Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="4" class="form-input" placeholder=" " required></textarea>
+                        <label for="message" class="form-label">Message</label>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
         </div>
     </section>
+
+    <!-- Success Alert Toast -->
+    <div id="success-toast" class="success-toast">Message Sent Successfully!</div>
 
     <script>
        
@@ -668,7 +706,7 @@
             draw() { 
                 
                 const isLightMode = document.body.classList.contains('light-mode');
-                const colorRGB = isLightMode ? '198, 40, 40' : '212, 175, 55'; // Red or Gold
+                const colorRGB = isLightMode ? '198, 40, 40' : '212, 175, 55'; 
                 const shadowColor = isLightMode ? '#C62828' : '#d4af37';
                 
                 goldCtx.save(); 
@@ -732,10 +770,30 @@
         animateCursor();
 
         
-        const interactiveElements = document.querySelectorAll('a, button');
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        // --- CONTACT FORM LOGIC ---
+        const contactForm = document.getElementById('contact-form');
+        const successToast = document.getElementById('success-toast');
+
+        contactForm.addEventListener('submit', (e) => {
+            // Prevent the form from refreshing the page or trying to send an email
+            e.preventDefault(); 
+            
+            // Show the luxury toast alert
+            successToast.classList.add('show');
+            
+            // Clear the form fields
+            contactForm.reset();
+            
+            // Hide the toast alert after 3 seconds
+            setTimeout(() => {
+                successToast.classList.remove('show');
+            }, 3000);
         });
     </script>
 </body>
